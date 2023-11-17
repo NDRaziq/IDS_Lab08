@@ -1,6 +1,6 @@
 ---
 title: "Lab 08 - Predicting rain"
-author: "INSERT NAME HERE"
+author: "Nor Danish Raziq Nor Azhar"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -19,7 +19,7 @@ weather <- read.csv("data/weatherAUS.csv", header = TRUE)
 
 We will start by transform any character variables that need to be transformed into categorical. Use the following code to identify them and trasform them into factors.
 
-```{r mutate-char}
+```{r mutate-char, eval = FALSE}
 weather %>% 
   select(where(is.character),-Date) %>% names()
 weather <- weather %>% 
@@ -28,14 +28,14 @@ weather <- weather %>%
 
 To simplify things, today we will not be using some categorical explanatory variables, because they have a very large number of categories and might make our model interpretation more complex. Specifically we will exclude `WindGustDir`, `WindDir9am` and `WindDir3pm`. 
 
-```{r remove-wind}
+```{r remove-wind, eval = FALSE}
 weather <- weather %>%
   select(-WindGustDir,-WindDir9am,-WindDir3pm)
 ```
 
 Note that some of these variables have a large number of missing values:
 
-```{r find-prop-na}
+```{r find-prop-na, eval = FALSE}
 weather %>% 
   select(where(~ any(is.na(.)))) %>% 
   summarise(across(everything(), ~mean(is.na(.)))) %>%
@@ -59,7 +59,7 @@ weather %>%
 
 We will focus our analysis on the city of `Portland`.
 
-```{r}
+```{r, eval = FALSE}
 weather_Portland <- weather %>%
   filter(Location == "Portland")
 ```
@@ -94,7 +94,7 @@ weather_Portland <- weather %>%
 
 Let us set a seed and perform a split of our data.
 
-```{r seed}
+```{r seed, eval = FALSE}
 set.seed(111723)
 ```
 
@@ -195,7 +195,7 @@ weather_pred2 %>%
 
 4. Now focus on the second model. Consider several thresholds for predicting `RainTomorrow` and look at the number of false positives and false negatives. For example:
 
-```{r}
+```{r, eval = FALSE}
 cutoff_prob <- 0.5
 weather_pred2 %>%
   mutate(
